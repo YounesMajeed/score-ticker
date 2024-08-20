@@ -40,8 +40,8 @@ export default function MatchPage({ params }) {
   }
 
   return (
-    <div className="flex min-h-screen items-end min-w-full">
-      <div className="flex flex-row">
+    <div className="flex min-h-screen justify-end min-w-full flex-col">
+      <div className="flex flex-row bg-slate-950 p-2">
         <span>
           {data.current_inning === 1
             ? <span><span>{data.team_a.name}</span> <span> {data.team_a.summary} </span> </span>
@@ -62,24 +62,16 @@ export default function MatchPage({ params }) {
         </div>
 
         <span className="px-2">
-          {data.bowlers.nsb.name} {data.bowlers.wickets}
-          {data.bowlers.nsb.runs}({data.bowlers.nsb.overs}){" "}
+          {data.bowlers.sb.name}{" - "} {data.bowlers.wickets} {" "}
+          {data.bowlers.sb.runs}({data.bowlers.sb.overs}){" "}
         </span>
       </div>
 
-      <div>
+      <div className="flex flex-row bg-slate-950 p-2">
         {" "}
         This Over:
         {data.recent_over.split("|")[1]}
       </div>
-
-      {/* <div style={{ marginTop: "20px" }}>
-        <h4>Match Details</h4>
-        <p>Toss: {data.toss_details}</p>
-        <p>Result: {data.match_summary.summary}</p>
-        <p>Winning Team: {data.winning_team}</p>
-        <p>Win By: {data.win_by}</p>
-      </div> */}
     </div>
   );
 }
