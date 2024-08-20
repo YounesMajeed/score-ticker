@@ -36,21 +36,21 @@ export default function MatchPage({ params }) {
   }, [id]);
 
   if (!data) {
-    return <div>Loading...</div>;
+    return <div className="text-gray-950">Loading...</div>;
   }
 
   return (
-    <div className="flex min-h-screen justify-end min-w-full flex-col">
-      <div className="flex flex-row bg-slate-950 p-2">
+    <div className="flex min-h-screen justify-end items-stretch min-w-full flex-col">
+      <div className="flex flex-row bg-slate-950 px-4 py-1 items-center">
         <span>
           {data.current_inning === 1
-            ? <span><span>{data.team_a.name}</span> <span> {data.team_a.summary} </span> </span>
-            : <span><span>{data.team_b.name} </span> <span>{data.team_b.summary} </span></span> } 
+            ? <span><span className="text-xl">{data.team_a.name}</span> {"   |   "}<span className="text-2xl"> {data.team_a.summary} </span> </span>
+            : <span><span className="text-xl">{data.team_b.name} </span> {"   |   "} <span className="text-2xl">{data.team_b.summary} </span></span> } 
           {data.current_inning === 1
             ? data.team_a.innings[0].summary.over
             : data.team_b.innings[0].summary.over}
         </span>
-        <div className="">
+        <div className="mx-12">
           <span className="px-2">
             🏏{data.batsmen.sb.name}{" "}
             {data.batsmen.sb.runs}({data.batsmen.sb.balls})
@@ -60,14 +60,13 @@ export default function MatchPage({ params }) {
             {data.batsmen.nsb.runs}({data.batsmen.nsb.balls})
           </span>
         </div>
-
-        <span className="px-2">
-          {data.bowlers.sb.name}{" - "} {data.bowlers.wickets} {" "}
+        <span className="mx-16 px-2">
+          {" ⚾ "}{data.bowlers.sb.name}{" - "} {data.bowlers.wickets} {" "}
           {data.bowlers.sb.runs}({data.bowlers.sb.overs}){" "}
         </span>
       </div>
 
-      <div className="flex flex-row bg-slate-950 p-2">
+      <div className="flex flex-row bg-slate-950 p-2 justify-center">
         {" "}
         This Over:
         {data.recent_over.split("|")[1]}

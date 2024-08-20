@@ -15,7 +15,7 @@ export default function HomePage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col p-4 items-center justify-center">
+    <div className="min-h-screen flex flex-col p-4 items-center justify-center text-gray-950">
       <h1 className="m-10 text-2xl font-mono font-extrabold">Score Ticker <span className="text-sm font-thin">by Younis Majeed</span></h1>
       <h1 className="m-4">Enter Match ID</h1>
       <form onSubmit={handleSubmit}>
