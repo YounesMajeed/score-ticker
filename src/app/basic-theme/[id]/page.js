@@ -36,7 +36,11 @@ export default function MatchPage({ params }) {
   }, [id]);
 
   if (!data) {
-    return <div className="text-gray-950">Loading...</div>;
+    return (
+      <div className="flex items-center justify-center text-gray-950 px-10 py-10">
+        Loading...
+      </div>
+    );
   }
 
   // setting the score, Team name and the Overs
@@ -57,16 +61,17 @@ export default function MatchPage({ params }) {
 
   return (
     <div className="flex min-h-screen justify-end items-stretch min-w-full flex-col">
+      <div className="hidden lg:block">
       <div className="flex flex-row bg-slate-300 px-2 py-1 items-center justify-between text-xl">
         <span className="py-0">
           <span className="bg-red-500 py-1 px-8 rounded-s-full text-3xl font-light">
             {name.substring(0, 15)}
           </span>
-          <span className=" bg-blue-600 py-1 px-8 rounded-e-full text-3xl font-extrabold">
+          <span className=" bg-blue-700 py-1 px-8 rounded-e-full text-3xl font-extrabold">
             {score} <span className="font-extralight">{over}</span>
           </span>
         </span>
-        <div className=" bg-blue-600 py-2 px-8 rounded-full ">
+        <div className=" bg-blue-700 py-2 px-8 rounded-full ">
           <span className="px-2">
             {batter.sb.name.substring(0, 14)}{" "}
             <span className="font-extrabold">{batter.sb.runs}</span>
@@ -78,7 +83,7 @@ export default function MatchPage({ params }) {
             <span className="font-extralight">({batter.nsb.balls})</span>
           </span>
         </div>
-        <span className="bg-blue-700 py-2 px-8 rounded-full">
+        <span className="bg-slate-700 py-2 px-8 mr-3 rounded-full">
           {" ⚾ "}
           {bowler.sb.name.substring(0, 14)}
           {" :- "} {bowler.sb.wickets} {" . "}
@@ -87,12 +92,14 @@ export default function MatchPage({ params }) {
         </span>
       </div>
 
-      <div className="flex flex-row bg-slate-800 px-8 py-2 justify-between">
+      <div className="flex flex-row bg-slate-800 px-8 py-2 justify-between text-lg">
         <span>Run Rate: {runrate}</span>
         <span>{data.match_summary.summary}</span>
         This Over:
         {data.recent_over.split("|")[1]}
       </div>
+      </div>
+      <div className="block md:hidden text-slate-950 text-xl text-center py-40 font-bold"> The Preview looks best only on desktop.</div>
     </div>
   );
 }
