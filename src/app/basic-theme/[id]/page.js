@@ -62,44 +62,47 @@ export default function MatchPage({ params }) {
   return (
     <div className="flex min-h-screen justify-end items-stretch min-w-full flex-col">
       <div className="hidden lg:block">
-      <div className="flex flex-row bg-slate-300 px-2 py-1 items-center justify-between text-xl">
-        <span className="py-0">
-          <span className="bg-red-500 py-1 px-8 rounded-s-full text-3xl font-light">
-            {name.substring(0, 15)}
+        <div className="flex flex-row bg-slate-300 px-2 py-1 items-center justify-between text-xl">
+          <span className="py-0">
+            <span className="bg-red-500 py-1 px-8 rounded-s-full text-4xl font-light">
+              {name.substring(0, 15)}
+            </span>
+            <span className=" bg-blue-700 py-1 px-8 rounded-e-full text-4xl font-extrabold">
+              {score} <span className="font-extralight">{over}</span>
+            </span>
           </span>
-          <span className=" bg-blue-700 py-1 px-8 rounded-e-full text-3xl font-extrabold">
-            {score} <span className="font-extralight">{over}</span>
-          </span>
-        </span>
-        <div className=" bg-blue-700 py-2 px-8 rounded-full ">
-          <span className="px-2">
-            {batter.sb.name.substring(0, 14)}{" "}
-            <span className="font-extrabold">{batter.sb.runs}</span>
-            <span className="font-extralight">({batter.sb.balls})*</span>
-          </span>
-          <span className="px-2">
-            {batter.nsb.name.substring(0, 14)}{" "}
-            <span className="font-extrabold">{batter.nsb.runs}</span>
-            <span className="font-extralight">({batter.nsb.balls})</span>
+          <div className=" bg-blue-700 py-2 px-8 rounded-full text-2xl ">
+            <span className="px-2">
+              {batter.sb.name} {/* {batter.sb.name.substring(0, 14)}{" "} */}
+              <span className="font-extrabold">{batter.sb.runs}</span>
+              <span className="font-extralight">({batter.sb.balls})*</span>
+            </span>
+            <span className="px-2">
+              {batter.nsb.name.substring(0, 14)}{" "}
+              <span className="font-extrabold">{batter.nsb.runs}</span>
+              <span className="font-extralight">({batter.nsb.balls})</span>
+            </span>
+          </div>
+          <span className="bg-slate-700 py-2 px-8 mr-3 rounded-full text-2xl">
+            {" ⚾ "}
+            {bowler.sb.name.substring(0, 14)}
+            {" :- "} {bowler.sb.wickets} {" . "}
+            {bowler.sb.runs}
+            {" . "}({bowler.sb.overs})
           </span>
         </div>
-        <span className="bg-slate-700 py-2 px-8 mr-3 rounded-full">
-          {" ⚾ "}
-          {bowler.sb.name.substring(0, 14)}
-          {" :- "} {bowler.sb.wickets} {" . "}
-          {bowler.sb.runs}
-          {" . "}({bowler.sb.overs})
-        </span>
-      </div>
 
-      <div className="flex flex-row bg-slate-800 px-8 py-2 justify-between text-lg">
-        <span>Run Rate: {runrate}</span>
-        <span>{data.match_summary.summary}</span>
-        This Over:
-        {data.recent_over.split("|")[1]}
+        <div className="flex flex-row bg-slate-800 px-16 py-2 justify-between text-2xl">
+          <span>Run Rate: {runrate}</span>
+          <span>{data.match_summary.summary}</span>
+          This Over:
+          {data.recent_over.split("|")[1]}
+        </div>
       </div>
+      <div className="block md:hidden text-slate-950 text-xl text-center py-40 font-bold">
+        {" "}
+        The Preview looks best only on desktop.
       </div>
-      <div className="block md:hidden text-slate-950 text-xl text-center py-40 font-bold"> The Preview looks best only on desktop.</div>
     </div>
   );
 }
