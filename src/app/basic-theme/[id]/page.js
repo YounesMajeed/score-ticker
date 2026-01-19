@@ -1,6 +1,8 @@
-"use client"; // Ensure this is a client component
+"use client";
 
 import { useEffect, useState } from "react";
+import { fetchMatchData } from "../../utils/api";
+import { getScorecardUrl } from "../../utils/apiEndpoints";
 
 export default function MatchPage({ params }) {
   const [data, setData] = useState(null);
@@ -8,30 +10,22 @@ export default function MatchPage({ params }) {
 
   useEffect(() => {
     if (!id) return;
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          `https://cricheroes.in/api/v1/scorecard/get-mini-scorecard/${id}`,
-          {
-            headers: {
-              "api-key": "cr!CkH3r0s",
-              "device-type": "Chrome: 127.0.0.0",
-              udid: "5010064645373612700053736",
-            },
-          }
-        );
 
-        const result = await response.json();
+    const getData = async () => {
+      const url = getScorecardUrl(id);
+      const result = await fetchMatchData(url);
+      
+      if (result && result.data) {
         setData(result.data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
       }
     };
 
-    // Fetch data every 5 seconds
-    const intervalId = setInterval(fetchData, 5000);
+    // Initial fetch
+    getData();
 
-    // Cleanup interval on component unmount
+    // Fetch data every 5 seconds
+    const intervalId = setInterval(getData, 5000);
+
     return () => clearInterval(intervalId);
   }, [id]);
 
@@ -48,28 +42,27 @@ export default function MatchPage({ params }) {
     );
   }
 
-  // setting the score, Team name and the Overs
-  const score =
-    data.current_inning === 1 ? data.team_a.summary : data.team_b.summary;
-  const over =
-    data.current_inning === 1
-      ? data.team_a.innings[0].summary.over
-      : data.team_b.innings[0].summary.over;
-  const name = data.current_inning === 1 ? data.team_a.name : data.team_b.name;
-  const runrate =
-    data.current_inning === 1
-      ? data.team_a.innings[0].summary.rr
-      : data.team_b.innings[0].summary.rr;
+  // --- LOGIC: Extract Data ---
+  const isInningOne = data.current_inning === 1;
+  const activeTeam = isInningOne ? data.team_a : data.team_b;
+  const activeInning = isInningOne ? data.team_a.innings[0] : data.team_b.innings[0];
+
+  const score = activeTeam.summary;
+  const over = activeInning.summary.over;
+  const name = activeTeam.name;
+  const runrate = activeInning.summary.rr;
+  
   const batter = data.batsmen;
   const bowler = data.bowlers;
 
   return (
     <div className="flex min-h-screen justify-end items-stretch min-w-full flex-col font-sans">
       <div className="hidden lg:block">
-        {/* Main Ticker Bar - White Background for "Card" look */}
+        
+        {/* Main Ticker Bar */}
         <div className="flex flex-row bg-white shadow-lg border-t-4 border-[#4285F4] px-4 py-3 items-center justify-between text-xl">
           
-          {/* Team Name (Google Blue) & Score (Google Red) */}
+          {/* Team Name & Score */}
           <span className="flex items-center shadow-sm rounded-full overflow-hidden">
             <span className="bg-[#4285F4] text-white py-2 px-6 text-2xl font-medium tracking-wide">
               {name.substring(0, 15)}
@@ -79,12 +72,12 @@ export default function MatchPage({ params }) {
             </span>
           </span>
 
-          {/* Batsmen (Google Yellow - Dark Text for contrast) */}
+          {/* Batsmen */}
           <div className="bg-[#FBBC05] text-gray-900 py-2 px-8 rounded-full text-xl font-medium shadow-sm mx-2">
             <span className="px-3 border-r border-yellow-600/30">
               {batter.sb.name}
               <span className="font-extrabold ml-2">{batter.sb.runs}</span>
-              <span className="text-sm ml-1 font-normal opacity-80">({batter.sb.balls})🏏</span>
+              <span className="text-sm ml-1 font-normal opacity-80">({batter.sb.balls})*</span>
             </span>
             <span className="px-3">
               {batter.nsb.name.substring(0, 14)}
@@ -93,7 +86,7 @@ export default function MatchPage({ params }) {
             </span>
           </div>
 
-          {/* Bowler (Google Green) */}
+          {/* Bowler */}
           <span className="bg-[#34A853] text-white py-2 px-8 rounded-full text-xl shadow-sm flex items-center">
             <span className="mr-2">⚾</span>
             <span className="font-medium">{bowler.sb.name.substring(0, 14)}</span>
@@ -107,7 +100,7 @@ export default function MatchPage({ params }) {
           </span>
         </div>
 
-        {/* Footer / Info Bar (Google Grey) */}
+        {/* Footer / Info Bar */}
         <div className="flex flex-row bg-[#F1F3F4] text-gray-700 px-16 py-2 justify-between text-lg font-medium border-t border-gray-200">
           <span>Run Rate: <span className="text-[#EA4335] font-bold">{runrate}</span></span>
           <span className="uppercase tracking-widest text-gray-500 text-sm mt-1">{data.match_summary.summary}</span>
