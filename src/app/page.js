@@ -97,7 +97,8 @@ export default function HomePage() {
             </div>
 
             <div className="bg-gray-50 p-6 rounded-2xl border border-gray-100">
-              <h3 className="font-bold text-xl mb-3 text-[#4285F4]">The score isn't updating?</h3>
+              {/* FIXED LINE BELOW: Changed 'isn't' to 'isn&apos;t' */}
+              <h3 className="font-bold text-xl mb-3 text-[#4285F4]">The score isn&apos;t updating?</h3>
               <p className="text-gray-600">
                 The ticker automatically refreshes every 5 seconds. If it stops, please check if the match is still live on the source website.
               </p>
