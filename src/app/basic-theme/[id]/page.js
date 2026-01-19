@@ -84,7 +84,7 @@ export default function MatchPage({ params }) {
             <span className="px-3 border-r border-yellow-600/30">
               {batter.sb.name}
               <span className="font-extrabold ml-2">{batter.sb.runs}</span>
-              <span className="text-sm ml-1 font-normal opacity-80">({batter.sb.balls})*</span>
+              <span className="text-sm ml-1 font-normal opacity-80">({batter.sb.balls})🏏</span>
             </span>
             <span className="px-3">
               {batter.nsb.name.substring(0, 14)}
